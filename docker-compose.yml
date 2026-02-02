@@ -1,0 +1,23 @@
+services:
+  backend:
+    # Match your folder name here
+    build: ./agile-backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./agile-backend:/app
+    environment:
+      - FLASK_ENV=development
+
+  frontend:
+    # Match your folder name here
+    build: ./agile-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./agile-frontend:/app
+      # This protects the container's libraries from being 
+      # overwritten by your Windows node_modules
+      - /app/node_modules 
+    depends_on:
+      - backend
