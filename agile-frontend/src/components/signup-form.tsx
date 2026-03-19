@@ -64,18 +64,25 @@ const [serverError, setServerError] = useState<string | null>(null)
 const onSubmit = async (data: SignupFormValues) => {
 setServerError(null)
     try {
-      const BASE_URL = "http://localhost:5000"
+      // const BASE_URL = "http://localhost:5000" //dev
+
       
       console.log("data: ", data);
       // 1. Send name, email AND password
-        await axios.post(`${BASE_URL}/api/auth/register`, {
+        // const path1 = "http://localhost:5000/api/auth/register" //dev
+        const path1 = "/api/auth/register" //prod
+
+        await axios.post(path1, {
             nom: data.name,
             email: data.email,
             password: data.password // Sending raw (HTTPS will encrypt this)
         })
   
       // 2. Silent Login
-        const loginRes = await axios.post(`${BASE_URL}/api/auth/login`, {
+        // const path2 = "http://localhost:5000/api/auth/login" //dev
+        const path2 = "/api/auth/login" //prod
+
+        const loginRes = await axios.post(path2, {
             email: data.email,
             password: data.password
         })

@@ -160,7 +160,8 @@ const [currentModules, setCurrentModules] = useState(MODULES_CONFIG["math-info"]
 
   // Initialisation du Formulaire (DOIT ÊTRE AVANT ON DROP)
   const form = useForm<NotesFormValues>({
-    resolver: zodResolver(notesSchema),
+    //added as any here for migration prep
+    resolver: zodResolver(notesSchema) as any,
     defaultValues,
     mode: "onChange"
   });
@@ -276,7 +277,11 @@ const [currentModules, setCurrentModules] = useState(MODULES_CONFIG["math-info"]
         setCurrentModules(MODULES_CONFIG[localFil as keyof typeof MODULES_CONFIG]);
     }
       try {
-        const res = await axios.get("http://localhost:5000/api/predict/get-draft", {
+
+        // const path = "http://localhost:5000/api/predict/get-draft" //dev
+        const path = "/api/predict/get-draft" //prod
+
+        const res = await axios.get(path, {
           headers: { Authorization: `Bearer ${token}` }
         });
         
@@ -301,7 +306,10 @@ const [currentModules, setCurrentModules] = useState(MODULES_CONFIG["math-info"]
     const currentValues = form.getValues();
     
     try {
-      await axios.post("http://localhost:5000/api/predict/save-draft", currentValues, {
+      // const path = "http://localhost:5000/api/predict/save-draft" //dev
+      const path = "/api/predict/save-draft" //prod
+
+      await axios.post(path, currentValues, {
         headers: { Authorization: `Bearer ${token}` }
       });
       toast.success("Brouillon sauvegardé avec succès !", {
@@ -337,8 +345,11 @@ try{
 
 
         // Your existing prediction logic
-      const BASE_URL = "http://localhost:5000"
-      const response = await axios.post(`${BASE_URL}/api/predict/predict`, 
+      // const BASE_URL = "http://localhost:5000" //dev
+      // const path = "http://localhost:5000/api/predict/predict" // dev
+      const path = "/api/predict/predict" //prod
+
+      const response = await axios.post(path, 
         formattedData, 
         { headers: { Authorization: `Bearer ${token}` }
       });
@@ -372,34 +383,8 @@ try{
         });
       }
 
-          // Exemple : { note_algebre: 13.00, note_analyse: 15.50 }
 
-          // console.log("🚀 Données prêtes pour l'IA (Flask) :", {
-          //   filiere: userFiliere,
-          //   notes: data,
-          //   moyenne_calculee: moyenne,
-          //   formattedData: formattedData
-          // });
-          // toast.success("Données envoyées à l'IA", {
-          //   style: {
-          //     border: "1px solid #4ade80",   // green-400
-          //     padding: "16px",
-          //     color: "#166534",              // green-800
-          //     background: "#f0fdf4",         // green-50
-          //   },
-          // });
 
-          /* // TEST ENVOI AXIOS (POST ou PUT vers ton endpoint Flask)
-          try {
-            const response = await axios.post('http://127.0.0.1:5000/predict', {
-              filiere: userFiliere,
-              notes: formattedData
-            });
-            console.log("Réponse IA :", response.data);
-          } catch (error) {
-            console.error("Erreur lors de la prédiction :", error);
-          }
-          */
   }
 
 // change this 

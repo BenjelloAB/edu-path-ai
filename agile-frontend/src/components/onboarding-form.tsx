@@ -15,9 +15,12 @@ import { useNavigate } from "react-router-dom"
 import { toast } from "sonner" 
 
 const onboardingSchema = z.object({
-  filiere: z.string({ required_error: "Veuillez choisir une filière" }),
-  etablissement: z.string({ required_error: "Veuillez choisir un établissement" }),
-  annee: z.string({ required_error: "Veuillez choisir votre année" }),
+  // filiere: z.string({ required_error: "Veuillez choisir une filière" }),
+  // etablissement: z.string({ required_error: "Veuillez choisir un établissement" }),
+  // annee: z.string({ required_error: "Veuillez choisir votre année" }),
+  filiere: z.string().min(1, "Veuillez choisir une filière"),
+  etablissement: z.string().min(1, "Veuillez choisir un établissement"),
+  annee: z.string().min(1, "Veuillez choisir votre année"),
 })
 
 type OnboardingValues = z.infer<typeof onboardingSchema>
@@ -39,7 +42,7 @@ const {
   })
   const onSubmit = async (data: OnboardingValues) => {
     try {
-      const BASE_URL = "http://localhost:5000";
+      // const BASE_URL = "http://localhost:5000"; //dev
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -49,8 +52,11 @@ const {
     console.log("Data: ",data)
     console.log("token: ", token)
     // 1. Send to Backend
+    // const path= "http://localhost:5000/api/student/onboarding" //dev
+    const path= "/api/student/onboarding" //prod
+
     await axios.post(
-      `${BASE_URL}/api/student/onboarding`, 
+      path, 
       {
         filiere: data.filiere,
         etablissement: data.etablissement,

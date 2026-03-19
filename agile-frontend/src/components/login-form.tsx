@@ -60,9 +60,12 @@ export function LoginForm({
       console.log(data)
 
       // BASE_URL with the ip of current machine
-      const BASE_URL = "http://localhost:5000" 
+      // const BASE_URL = "http://localhost:5000"  // dev
       
-      const response = await axios.post(`${BASE_URL}/api/auth/login`, {
+      // const path1 = "http://localhost:5000/api/auth/login" //dev
+      const path1 = "/api/auth/login" //prod
+
+      const response = await axios.post(path1, {
         email: data.email,
         password: data.password
       })
@@ -71,13 +74,16 @@ export function LoginForm({
         // 1. Store the JWT Token
 
         
-        localStorage.setItem("token", response.data.access_token)
+      localStorage.setItem("token", response.data.access_token)
       localStorage.setItem("user_name", response.data.nom)
       localStorage.setItem("user_filiere", response.data.filiere)
       localStorage.setItem("user_email", response.data.email)
         
-        // 2. Check user status to decide where to go
-        const statusRes = await axios.get(`${BASE_URL}/api/auth/user-status`, {
+      // 2. Check user status to decide where to go
+      // const path2 = "http://localhost:5000/api/auth/user-status" //dev
+      const path2 = "/api/auth/user-status" //prod
+
+      const statusRes = await axios.get(path2, {
           headers: { Authorization: `Bearer ${response.data.access_token}` }
         })
 

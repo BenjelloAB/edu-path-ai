@@ -92,7 +92,9 @@ console.log(localStorage.getItem('token'))
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("token")
-        const res = await axios.get("http://localhost:5000/api/student/me", {
+        // const path ="http://localhost:5000/api/student/me" //dev
+        const path = "/api/student/me" //prod
+        const res = await axios.get(path, {
           headers: { Authorization: `Bearer ${token}` }
         })
         
@@ -133,9 +135,11 @@ document.body.style.cursor = 'wait';
     try {
       const token = localStorage.getItem("token")
       // Normalize the filiere for MODULES_CONFIG (e.g., "Math-Info" -> "math-info")
-    const normalizedFiliere = values.filiere.toLowerCase();
+      const normalizedFiliere = values.filiere.toLowerCase();
+      // const path = 'http://localhost:5000/api/student/edit-profile' //dev
+      const path ='/api/student/edit-profile' //prod
       const response = await axios.put(
-        'http://localhost:5000/api/student/edit-profile', 
+        path, 
         {
           nom: values.fullname,
           email: values.email,

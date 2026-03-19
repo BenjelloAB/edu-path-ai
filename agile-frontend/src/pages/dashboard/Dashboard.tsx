@@ -74,7 +74,10 @@ const [data, setData] = useState<any>(null);
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/student/dashboard-summary", {
+        // const path = "http://localhost:5000/api/student/dashboard-summary" //dev
+        const path = "/api/student/dashboard-summary" //prod
+
+        const res = await axios.get(path, {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log(res.data);

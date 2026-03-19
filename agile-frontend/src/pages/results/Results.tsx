@@ -65,7 +65,9 @@ useEffect(() => {
     const fetchResults = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/predict/latest-results", {
+        // const path = "http://localhost:5000/api/predict/latest-results" //dev
+        const path = "/api/predict/latest-results" //prod
+        const res = await axios.get(path, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setData(res.data);

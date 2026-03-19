@@ -76,7 +76,10 @@ const [historyData, setHistoryData] = useState<any[]>([]);
     const fetchHistory = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/predict/history", {
+        // const path = "http://localhost:5000/api/predict/history" //dev
+        const path = "/api/predict/history" //prod
+        const res = await axios.get(path,
+         {
           headers: { Authorization: `Bearer ${token}` }
         });
         setHistoryData(res.data);
