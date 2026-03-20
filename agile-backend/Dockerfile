@@ -1,16 +1,23 @@
-# Use the slim version of 3.11 to save RAM and Disk space on your 4GB VM
 FROM python:3.11-slim
 
 WORKDIR /app
 
-# Copy requirements first to leverage Docker cache
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# System dependencies for some ML libraries
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy your code, including the model_orientation.pkl
+COPY requirements.txt .
+# Add gunicorn to  requirements.txt or install it here
+RUN pip install --no-cache-dir -r requirements.txt gunicorn
+
 COPY . .
+
+# Ensure the instance folder exists for SQLite
+RUN mkdir -p instance
 
 EXPOSE 5000
 
-# Run the Flask app
-CMD ["python", "app.py"]
+# Use Gunicorn: 2 workers
+# 'app:app' means look in app.py for the 'app' variable.
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "app:app"]
