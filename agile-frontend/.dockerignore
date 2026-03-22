@@ -1,0 +1,36 @@
+# 1. Dependencies 
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# 2. Local Build Outputs
+dist/
+build/
+.next/
+
+# 3. Secrets & Local Config
+.env
+.env.local
+*.pem
+*.key
+
+# 4. Metadata & Infrastructure
+.git
+.gitignore
+.dockerignore
+Dockerfile
+README.md
+LICENSE
+
+terraform/
+ansible/
+kubernetes/
+
+# 5. Editor & OS Clutter
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+docker-compose.yml
+ngnix.compose.conf

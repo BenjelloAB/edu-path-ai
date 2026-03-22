@@ -25,3 +25,21 @@ build/
 Thumbs.db
 .vscode/
 .idea/
+
+kubernetes/secret.yaml
+
+# --- Terraform State ---
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# --- Ansible ---
+*.retry
+# If you use Ansible Vault password files locally
+.ansible_vault_pass
+
+# --- Infrastructure / K3s ---
+k3s.yaml
+*.pem
+*.key

@@ -1,0 +1,47 @@
+---
+# Install K3s server (control plane) on the Master node
+ 
+- name: Install K3s master
+  shell: |
+    curl -sfL https://get.k3s.io | sh -s - server \
+      --disable traefik \
+      --write-kubeconfig-mode 644
+  args:
+    creates: /usr/local/bin/k3s
+ 
+# traefik is disabled because we will install the Nginx Ingress Controller ourselves
+ 
+- name: Wait for K3s to be ready
+  wait_for:
+    path: /var/lib/rancher/k3s/server/node-token
+    timeout: 60
+ 
+- name: Get K3s node token (Worker needs this to join)
+  slurp:
+    src: /var/lib/rancher/k3s/server/node-token
+  register: k3s_token
+ 
+- name: Save token as a fact for the worker role to use
+  set_fact:
+    k3s_node_token: "{{ k3s_token.content | b64decode | trim }}"
+ 
+- name: Get Master private IP
+  set_fact:
+    master_private_ip: "{{ ansible_default_ipv4.address }}"
+ 
+- name: Share token and IP with the worker group
+  add_host:
+    name: "k3s_token_holder"
+    k3s_node_token: "{{ k3s_node_token }}"
+    master_private_ip: "{{ master_private_ip }}"
+ 
+- name: Install Nginx Ingress Controller
+  shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.0/deploy/static/provider/cloud/deploy.yaml
+  environment:
+    KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+ 
+- name: Get kubeconfig for GitHub Actions
+  fetch:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: ./k3s-kubeconfig.yaml
+    flat: yes

@@ -1,0 +1,18 @@
+---
+# Step 1: Run common tasks on ALL nodes (Docker install)
+- hosts: all
+  become: yes
+  roles:
+    - common
+ 
+# Step 2: Set up the K3s control plane on the Master
+- hosts: master
+  become: yes
+  roles:
+    - k3s_master
+ 
+# Step 3: Join the Worker to the Master
+- hosts: worker
+  become: yes
+  roles:
+    - k3s_worker

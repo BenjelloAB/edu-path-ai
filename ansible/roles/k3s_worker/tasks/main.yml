@@ -1,0 +1,15 @@
+---
+# Join the Worker node to the Master's K3s cluster
+ 
+- name: Install K3s worker and join cluster
+  shell: |
+    curl -sfL https://get.k3s.io | K3S_URL=https://{{ hostvars['k3s_token_holder']['master_private_ip'] }}:6443 \
+      K3S_TOKEN={{ hostvars['k3s_token_holder']['k3s_node_token'] }} sh -
+  args:
+    creates: /usr/local/bin/k3s
+ 
+- name: Wait for K3s agent to start
+  systemd:
+    name: k3s-agent
+    state: started
+    enabled: yes

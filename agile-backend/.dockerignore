@@ -1,0 +1,52 @@
+# --- Python/Environment ---
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# --- Local Data & Logs ---
+instance/
+backend.log
+*.db
+*.sqlite
+
+# --- Secrets ---
+.env
+k3s.yaml
+*.pem
+*.key
+
+# --- Metadata & Tools ---
+.git
+.gitignore
+.dockerignore
+Dockerfile
+README.md
+LICENSE
+
+
+terraform/
+ansible/
+kubernetes/
+.github/
+agile-frontend/
+
+# --- Testing ---
+tests/
+test_*.py
+*.test.py
+pytest.ini
+.coverage
+coverage.xml
+
+# --- OS & Editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+docker-compose.yml

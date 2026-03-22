@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: YOUR_DOCKERHUB_USERNAME/agile-backend:latest
+          # GHA will replace 'latest' with the git SHA tag e.g. :a1b2c3d
+          ports:
+            - containerPort: 5000
+          envFrom:
+            # All keys from the Secret are injected as environment variables
+            - secretRef:
+                name: backend-secrets
+          volumeMounts:
+            - name: sqlite-storage
+              mountPath: /app/instance
+      volumes:
+        - name: sqlite-storage
+          persistentVolumeClaim:
+            claimName: sqlite-pvc

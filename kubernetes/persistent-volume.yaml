@@ -1,0 +1,27 @@
+# PersistentVolume - maps to a real folder on the EC2 Worker node disk
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sqlite-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  # hostPath means it uses the EC2 node's local disk
+  hostPath:
+    path: /mnt/sqlite-data
+ 
+---
+ 
+# PersistentVolumeClaim - the backend pod requests storage through this
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sqlite-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

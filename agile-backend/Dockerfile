@@ -20,4 +20,5 @@ EXPOSE 5000
 
 # Use Gunicorn: 2 workers
 # 'app:app' means look in app.py for the 'app' variable.
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "2", "app:app"]
+# one wroker for 1GB RAM ?
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "1", "app:app"]

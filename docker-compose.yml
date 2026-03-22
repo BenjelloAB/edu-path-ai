@@ -1,24 +1,9 @@
-version: '3.8'
-
-services:
-  backend:
-    build: ./agile-backend
-    container_name: flask_backend
-    env_file:
-      - ./agile-backend/.env
-    # Map the instance folder to a volume so the database isn't deleted 
-    # every time the container restarts
-    volumes:
-      - ./agile-backend/instance:/app/instance
-    # We don't strictly need to expose 5000 to the world because Nginx 
-    # talks to it internally(for debugging)
-    expose:
-      - "5000"
-
-  frontend:
+frontend:
     build: ./agile-frontend
     container_name: nginx_frontend
+    volumes:
+      - ./nginx.compose.conf:/etc/nginx/nginx.conf:ro 
     ports:
-      - "80:80" # Map EC2 port 80 to Nginx port 80
+      - "80:80"
     depends_on:
       - backend
