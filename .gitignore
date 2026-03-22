@@ -19,7 +19,7 @@ dist/
 build/
 .vite/
 
-*.dockerignore
+
 
 .DS_Store
 Thumbs.db
