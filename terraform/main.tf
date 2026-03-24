@@ -126,14 +126,16 @@ resource "azurerm_public_ip" "master" {
   name                = "master-pip"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
-  allocation_method   = "Static"
+  allocation_method   = "Static",
+  sku                 = "Standard"
 }
 
 resource "azurerm_public_ip" "worker" {
   name                = "worker-pip"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
-  allocation_method   = "Static"
+  allocation_method   = "Static",
+  sku                 = "Standard"
 }
 
 resource "azurerm_network_interface" "master" {
