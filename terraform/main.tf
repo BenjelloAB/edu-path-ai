@@ -26,7 +26,7 @@ variable "tenant_id"       { sensitive = true }
 variable "location"        { default = "spaincentral" }
 
 resource "azurerm_resource_group" "main" {
-  name     = "agile-rg"
+  name     = "agile-project-rg"
   location = var.location
 }
 
