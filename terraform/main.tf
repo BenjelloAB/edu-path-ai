@@ -23,7 +23,7 @@ variable "subscription_id" { sensitive = true }
 variable "client_id"       { sensitive = true }
 variable "client_secret"   { sensitive = true }
 variable "tenant_id"       { sensitive = true }
-variable "location"        { default = "northeurope" }
+variable "location"        { default = "spaincentral" }
 
 resource "azurerm_resource_group" "main" {
   name     = "agile-rg"
@@ -178,7 +178,7 @@ resource "azurerm_linux_virtual_machine" "master" {
   name                = "k3s-master"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
-  size                = "Standard_B1ms"
+  size                = "Standard_B2s"
   admin_username      = "ubuntu"
 
   network_interface_ids = [
@@ -207,7 +207,7 @@ resource "azurerm_linux_virtual_machine" "worker" {
   name                = "k3s-worker"
   resource_group_name = azurerm_resource_group.main.name
   location            = azurerm_resource_group.main.location
-  size                = "Standard_B1ms"
+  size                = "Standard_B2s"
   admin_username      = "ubuntu"
 
   network_interface_ids = [
