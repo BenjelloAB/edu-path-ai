@@ -23,7 +23,7 @@ variable "subscription_id" { sensitive = true }
 variable "client_id"       { sensitive = true }
 variable "client_secret"   { sensitive = true }
 variable "tenant_id"       { sensitive = true }
-variable "location"        { default = "germanywestcentral" }
+variable "location"        { default = "northeurope" }
 
 resource "azurerm_resource_group" "main" {
   name     = "agile-rg"
