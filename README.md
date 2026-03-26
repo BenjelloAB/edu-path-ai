@@ -1,5 +1,4 @@
-# 🚀 Agile K3s Academic Recommendation System
-
+# 🚀 Agile K3s Academic Recommendation System new
 A **data-driven platform** designed to recommend Master’s degree specializations based on a student’s academic performance (S1–S6).
 
 The system is tailored to the **French/Moroccan university structure** and leverages a **Machine Learning model** to provide automated academic orientation.
