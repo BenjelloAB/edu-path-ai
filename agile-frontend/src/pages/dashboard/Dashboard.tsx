@@ -147,7 +147,7 @@ if (loading) {
       
       {/* HEADER DE LA PAGE */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <h1 className="text-4xl font-extrabold tracking-tight">Bonjour {data?.student_name || "Étudiant"}, prêt pour votre orientation ?</h1>
+        <h1 className="text-4xl font-extrabold tracking-tight">Bonsoir {data?.student_name || "Étudiant"}, prêt pour votre orientation ?</h1>
       </div>
       
       <Separator />
